@@ -1,4 +1,4 @@
-demock-connect
+demock-express
 ==============
 
-Connect middleware for Demock
+Express middleware for Demock

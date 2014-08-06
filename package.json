@@ -1,16 +1,16 @@
 {
   "name": "demock-express",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Express middleware for Demock",
-  "main": "demock-express.js",
+  "author": "Ates Goral",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/atesgoral/demock-express.git"
   },
-  "author": "Ates Goral",
-  "license": "MIT",
+  "main": "demock-express.js",
   "dependencies": {
-    "demock": "0.0.0",
-    "serve-static": "^1.4.4"
+    "demock": "~0.1.0",
+    "serve-static": "~1.4.4"
   }
 }

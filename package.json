@@ -10,6 +10,7 @@
   "author": "Ates Goral",
   "license": "MIT",
   "dependencies": {
-    "demock": "0.0.0"
+    "demock": "0.0.0",
+    "serve-static": "^1.4.4"
   }
 }

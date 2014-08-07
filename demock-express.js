@@ -6,7 +6,7 @@ module.exports = function (options) {
     var staticMiddleWare = serveStatic(options.static.root, options.static.options);
 
     return function (httpRequest, httpResponse, next) {
-        if (httpRequest.url.indexOf(options.jsonPath) !== 0) {
+        if (options.jsonPath && httpRequest.url.indexOf('/' + options.jsonPath) !== 0) {
             return next();
         }
 

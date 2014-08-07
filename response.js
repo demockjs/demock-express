@@ -21,27 +21,26 @@ function DemockResponse(demockRequest, httpResponse, options) {
     };
 
     this._flush = function (callback) {
-        var data;
+        var body = chunks.join('');
 
-        if (options.ignoreMime || this.getHeader('Content-Type').indexOf(mime.lookup('json')) === 0) {
+        if (body && (options.ignoreMime || this.getHeader('Content-Type').indexOf(mime.lookup('json')) === 0)) {
             try {
-                data = JSON.parse(chunks.join(''));
+                var response = {
+                    statusCode: this.statusCode,
+                    statusText: http.STATUS_CODES[this.statusCode],
+                    data: JSON.parse(body)
+                };
+
+                while (demock.filterResponse(demockRequest, response)) {}
+
+                httpResponse.statusCode = response.statusCode;
+                // @todo: set status text
+
+                body = JSON.stringify(response.data);
             } catch (e) {}
         }
 
-        var response = {
-            statusCode: this.statusCode,
-            statusText: http.STATUS_CODES[this.statusCode],
-            data: data
-        };
-
-        while (demock.filterResponse(demockRequest, response)) {}
-
-        this.push(JSON.stringify(response.data));
-
-        httpResponse.statusCode = response.statusCode;
-        // @todo: set status text
-
+        this.push(body);
         this.pipe(httpResponse);
 
         callback();

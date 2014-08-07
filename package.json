@@ -1,6 +1,6 @@
 {
   "name": "demock-express",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Express middleware for Demock",
   "author": "Ates Goral <ates@magnetiq.com>",
   "license": "MIT",
@@ -11,7 +11,7 @@
   "main": "demock-express.js",
   "dependencies": {
     "demock": "~0.1.0",
-    "mime": "^1.2.11",
+    "mime": "~1.2.11",
     "serve-static": "~1.4.4"
   }
 }

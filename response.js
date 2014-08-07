@@ -1,9 +1,10 @@
 var util = require('util'),
-    Transform = require('stream').Transform;
+    Transform = require('stream').Transform,
+    mime = require('mime'),
     http = require('http'),
     demock = require('demock');
 
-function DemockResponse(demockRequest, httpResponse) {
+function DemockResponse(demockRequest, httpResponse, options) {
     Transform.call(this);
 
     this.getHeader = httpResponse.getHeader.bind(httpResponse);
@@ -22,9 +23,11 @@ function DemockResponse(demockRequest, httpResponse) {
     this._flush = function (callback) {
         var data;
 
-        try {
-            data = JSON.parse(chunks.join(''));
-        } catch (e) {}
+        if (options.ignoreMime || this.getHeader('Content-Type').indexOf(mime.lookup('json')) === 0) {
+            try {
+                data = JSON.parse(chunks.join(''));
+            } catch (e) {}
+        }
 
         var response = {
             statusCode: this.statusCode,

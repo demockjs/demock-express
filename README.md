@@ -18,4 +18,6 @@ app.use(demock({
         root: __dirname
     }
 }));
+
+app.listen(3000);
 ```

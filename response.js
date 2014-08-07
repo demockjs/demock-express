@@ -41,6 +41,7 @@ function DemockResponse(demockRequest, httpResponse, options) {
         }
 
         this.push(body);
+        this.setHeader('Content-Length', body.length);
         this.pipe(httpResponse);
 
         callback();

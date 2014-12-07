@@ -1,20 +1,16 @@
-var DemockRequest = require('./request'),
-    DemockResponse = require('./response'),
-    serveStatic = require('serve-static');
+var filterRequest = require('./request'),
+    DemockResponse = require('./response');
 
-module.exports = function (options) {
-    var staticMiddleWare = serveStatic(options.static.root, options.static.options);
-
+module.exports = function (staticMiddleWare, options) {
     return function (httpRequest, httpResponse, next) {
-        if (options.jsonPath && httpRequest.url.indexOf('/' + options.jsonPath) !== 0) {
-            return next();
-        }
+        if (!options.jsonPath || httpRequest.url.indexOf('/' + options.jsonPath) === 0) {
+            httpRequest = filterRequest(httpRequest);
 
-        var demockRequest = DemockRequest(httpRequest),
-            demockResponse = new DemockResponse(demockRequest, httpResponse, {
+            httpResponse = new DemockResponse(httpRequest, httpResponse, {
                 ignoreMime: options.ignoreMime
             });
+        }
 
-        staticMiddleWare(demockRequest, demockResponse, next);
+        staticMiddleWare(httpRequest, httpResponse, next);
     };
 };

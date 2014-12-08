@@ -25,18 +25,30 @@ function DemockResponse(demockRequest, httpResponse, options) {
 
         if (body && (options.ignoreMime || this.getHeader('Content-Type').indexOf(mime.lookup('json')) === 0)) {
             try {
+                var data = JSON.parse(body),
+                    isDataModified = false;
+
                 var response = {
                     statusCode: this.statusCode,
                     statusText: http.STATUS_CODES[this.statusCode],
-                    data: JSON.parse(body)
+                    data: data
                 };
 
-                while (demock.filterResponse(demockRequest, response)) {}
+                while (demock.filterResponse(demockRequest, response)) {
+                    isDataModified = true;
+                }
 
                 httpResponse.statusCode = response.statusCode;
                 // @todo: set status text
 
-                body = JSON.stringify(response.data);
+                if (isDataModified) {
+                    if (typeof response.data === 'object') {
+                        body = JSON.stringify(response.data);
+                        // @todo: set content type to JSON?
+                    } else {
+                        body = response.data;
+                    }
+                }
             } catch (e) {}
         }
 

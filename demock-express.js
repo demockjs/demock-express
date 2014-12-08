@@ -1,4 +1,4 @@
-var filterRequest = require('./request'),
+var filterRequest = require('./filterRequest'),
     DemockResponse = require('./response');
 
 module.exports = function (staticMiddleWare, options) {

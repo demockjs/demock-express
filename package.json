@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/atesgoral/demock-express.git"
+    "url": "git://github.com/demockjs/demock-express.git"
   },
   "main": "demock-express.js",
   "dependencies": {

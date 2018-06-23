@@ -1,6 +1,4 @@
-var demock = require('demock');
-
-function DemockRequest(httpRequest) {
+function DemockRequest(httpRequest, demock) {
     var request = {
         method: httpRequest.method,
         url: httpRequest.url,

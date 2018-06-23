@@ -10,7 +10,7 @@
   },
   "main": "demock-express.js",
   "dependencies": {
-    "demock": "~0.1.0",
+    "demock": "~0.2.0",
     "mime": "~1.2.11"
   }
 }

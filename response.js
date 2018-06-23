@@ -1,10 +1,9 @@
 var util = require('util'),
     Transform = require('stream').Transform,
     mime = require('mime'),
-    http = require('http'),
-    demock = require('demock');
+    http = require('http');
 
-function DemockResponse(demockRequest, httpResponse, options) {
+function DemockResponse(demockRequest, httpResponse, options, demock) {
     Transform.call(this);
 
     this.getHeader = httpResponse.getHeader.bind(httpResponse);
@@ -34,9 +33,7 @@ function DemockResponse(demockRequest, httpResponse, options) {
                     data: data
                 };
 
-                while (demock.filterResponse(demockRequest, response)) {
-                    isDataModified = true;
-                }
+                demock.filterResponse(demockRequest, response);
 
                 httpResponse.statusCode = response.statusCode;
                 // @todo: set status text
